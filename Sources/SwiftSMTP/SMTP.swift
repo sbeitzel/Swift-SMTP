@@ -168,38 +168,28 @@ public struct SMTP {
             return
         }
         do {
-            let socket = try SMTPSocket(
-                hostname: hostname,
-                email: email,
-                password: password,
-                port: port,
-                tlsMode: tlsMode,
-                tlsConfiguration: tlsConfiguration,
-                authMethods: authMethods,
-                domainName: domainName,
-                timeout: timeout
             let socket = if !authMethods.isEmpty {
-                 try SMTPSocket(
-                     hostname: hostname,
-                     email: email,
-                     password: password,
-                     port: port,
-                     tlsMode: tlsMode,
-                     tlsConfiguration: tlsConfiguration,
-                     authMethods: authMethods,
-                     domainName: domainName,
-                     timeout: timeout
-                 )
-             } else {
-                 try SMTPSocket(
-                     hostname: hostname,
-                     port: port,
-                     tlsMode: tlsMode,
-                     tlsConfiguration: tlsConfiguration,
-                     domainName: domainName,
-                     timeout: timeout
-                 )
-             }
+                try SMTPSocket(
+                    hostname: hostname,
+                    email: email,
+                    password: password,
+                    port: port,
+                    tlsMode: tlsMode,
+                    tlsConfiguration: tlsConfiguration,
+                    authMethods: authMethods,
+                    domainName: domainName,
+                    timeout: timeout
+                )
+            } else {
+                try SMTPSocket(
+                    hostname: hostname,
+                    port: port,
+                    tlsMode: tlsMode,
+                    tlsConfiguration: tlsConfiguration,
+                    domainName: domainName,
+                    timeout: timeout
+                )
+            }
             MailSender(
                 socket: socket,
                 mailsToSend: mails,
